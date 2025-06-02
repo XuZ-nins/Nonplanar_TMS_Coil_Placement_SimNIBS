@@ -23,7 +23,7 @@ Download the required atlases (T1 and T2 images) from the [COBRA Lab](https://ww
 
 **Important:** Convert atlas files to NIFTI format (*.nii) using [MOMinc](https://github.com/SIMEXP/mominc) before proceeding.
 
-Once converted, place the image files in the `raw/` directory.
+Once converted, place the image files (brain*_t1.nii, brain*_t2.nii) in the `raw/` directory.
 
 #### 2. SimNIBS Configuration
 Copy the following files to your SimNIBS installation:
