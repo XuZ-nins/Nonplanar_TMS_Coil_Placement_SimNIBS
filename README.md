@@ -21,7 +21,7 @@ This repository contains the implementation for the following research:
 #### 1. Atlas Setup
 Download the required atlases (T1 and T2 images) from the [COBRA Lab](https://www.cobralab.ca/atlases).
 
-**Important:** Convert atlas files to NIFTI format (*.nii) using [MOMinc](https://github.com/SIMEXP/mominc) before proceeding.
+**Important:** Convert atlas files to NIFTI format (*.nii) using the `minc_read.m` function in [MOMinc](https://github.com/SIMEXP/mominc) and the `spm_write_vol.m` function in [SPM12](https://www.fil.ion.ucl.ac.uk/spm/software/spm12/) before proceeding.
 
 Once converted, place the image files (brain*_t1.nii, brain*_t2.nii) in the `raw/` directory.
 
