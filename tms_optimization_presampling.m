@@ -29,7 +29,7 @@ par_on = 0; % Enable parpool = 1, else = 0
 
 %% Parameters
 fine_tuning = false; % Fine tuning of the rotation matrix (slightly slower)
-fine_collision_detection = true; % false: vertex-based detection; true: face-based detection (more robust but computationally expensive)
+fine_collision_detection = false; % false: vertex-based detection; true: face-based detection (more robust but computationally expensive)
 
 min_num_of_coil_positions = 60; % Mimimum number of points to evaluate around ROI
 max_num_of_coil_positions = 80; % Maximum number of points to evaluate around ROI
@@ -68,13 +68,23 @@ if par_on==1
     poolobj = parpool(pc,numCPUs);
 
     % Add cost function files
-    addAttachedFiles(poolobj,'coilpos_optimization.m');
-    addAttachedFiles(poolobj,'coilpos_cost_1_xyangle.m');
-    addAttachedFiles(poolobj,'coilpos_cost_2_zshift.m');
-    addAttachedFiles(poolobj,'coilpos_cost_3_finetune.m');
-    addAttachedFiles(poolobj,'coilpos_cost_4_closeup.m');
-    addAttachedFiles(poolobj,'simplifiedIntersect.m');
-    addAttachedFiles(poolobj,'check_collision.m');
+	if ~fine_collision_detection
+		addAttachedFiles(poolobj,'coilpos_optimization.m');
+		addAttachedFiles(poolobj,'coilpos_cost_1_xyangle.m');
+		addAttachedFiles(poolobj,'coilpos_cost_2_zshift.m');
+		addAttachedFiles(poolobj,'coilpos_cost_3_finetune.m');
+		addAttachedFiles(poolobj,'coilpos_cost_4_closeup.m');
+	else
+		addAttachedFiles(poolobj,'coilpos_optimization_face.m');
+		addAttachedFiles(poolobj,'coilpos_cost_1_xyangle_face.m');
+		addAttachedFiles(poolobj,'coilpos_cost_2_zshift_face.m');
+		addAttachedFiles(poolobj,'coilpos_cost_3_finetune_face.m');
+		addAttachedFiles(poolobj,'coilpos_cost_4_closeup_face.m');
+		addAttachedFiles(poolobj,'triangle_normals.m');
+		addAttachedFiles(poolobj,'transform_normal.m');
+		addAttachedFiles(poolobj,'angle_between.m');
+		addAttachedFiles(poolobj,'get_coil_skin_distance.m');
+	end
 end
 
 protocol_name = strcat(protocol_pre_list{protocol_pre_num},'_',protocol_post_list{protocol_post_num});
